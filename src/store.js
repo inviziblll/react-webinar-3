@@ -49,7 +49,7 @@ class Store {
     this.setState({
       ...this.state,
       list: [...this.state.list, { 
-        // code: Date.now().toString(36), // генерация уникального кода с преобразованием  в строку временной метки
+        // code: Date.now().toString(36), // генерация уникального кода с преобразованием в строку временной метки
         code: unic, 
         title: 'Новая запись',
         quantity: 0 
