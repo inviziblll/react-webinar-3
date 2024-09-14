@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement, clicked, num_word } from './utils.js';
+import { createElement, clicked } from './utils.js';
 import './styles.css';
 
 /**
