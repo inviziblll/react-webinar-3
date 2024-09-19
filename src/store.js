@@ -1,3 +1,5 @@
+import { generateCode } from './utils';
+
 /**
  * Хранилище состояния приложения
  */
@@ -5,15 +7,6 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.unique = this.maxCode(); // код элемента с максимальным значением
-  }
-
-  maxCode(){
-      let listCodes = this.state.list.map(item => { // получаем списолк всех кодов у элементов
-        return item.code;
-      });
-      let maxCode = Math.max(0, ...listCodes); // код с максимальным значением
-      return maxCode;
   }
 
   /**
@@ -51,15 +44,9 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
-    this.unique = this.unique + 1; //  уникальный код больше на 1 кода элемента с максимальным значением
     this.setState({
-        ...this.state,
-        list: [...this.state.list, { 
-          // code: unique, 
-          code: this.unique, 
-          title: 'Новая запись',
-          quantity: 0 
-        }],
+      ...this.state,
+      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
     });
   }
 
@@ -68,9 +55,9 @@ class Store {
    * @param code
    */
   deleteItem(code) {
-
     this.setState({
       ...this.state,
+      // Новый список, в котором не будет удаляемой записи
       list: this.state.list.filter(item => item.code !== code),
     });
   }
@@ -80,22 +67,19 @@ class Store {
    * @param code
    */
   selectItem(code) {
-
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-            item.selected = !item.selected;
-
-            // счетчик количества выделений
-            if(item.selected == true) { 
-              item.quantity++; 
-            }
+          // Смена выделения и подсчёт
+          return {
+            ...item,
+            selected: !item.selected,
+            count: item.selected ? item.count : item.count + 1 || 1,
+          };
         }
-        else{ // сбрасываем выделение у элемента который мог быть выделен раньше
-          item.selected = false; 
-        }
-        return item;
+        // Сброс выделения если выделена
+        return item.selected ? { ...item, selected: false } : item;
       }),
     });
   }
