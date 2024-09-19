@@ -18,24 +18,6 @@ function App({ store }) {
 
   const callbacks = {
 
-    // onDeleteItem: useCallback(
-    //   code => {
-    //     store.deleteItem(code);
-    //   },
-    //   [store],
-    // ),
-
-    // onSelectItem: useCallback(
-    //   code => {
-    //     store.selectItem(code);
-    //   },
-    //   [store],
-    // ),
-
-    // onAddItem: useCallback(() => {
-    //   store.addItem();
-    // }, [store]),
-
     // cart
 
     onAddToCart: useCallback(
@@ -52,13 +34,6 @@ function App({ store }) {
       },
       [store],
     ),
-
-    // onOpenModal: useCallback(() => {
-    //   setIsModal(true);
-    // }, []),
-    // onCloseModal: useCallback(() => {
-    //   setIsModal(false);
-    // }, []),
 
   };
 
